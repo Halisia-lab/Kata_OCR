@@ -2,16 +2,19 @@ package org.example;
 
 import java.io.*;
 
-public class App 
+public class App
 {
     public static void main( String[] args ) throws IOException {
+        String inputFileName = FeaturesManagement.chooseInputFile();
+        String outputMode = FeaturesManagement.chooseOutputMode();
 
-        InputFileReader inputFileReader = new InputFileReader("files/input.txt");
-        inputFileReader.parse();
 
-        //TODO: Read the output file
-
+        FileParser fileParser = new FileParser("entries_files/" + inputFileName, outputMode);
+        fileParser.parse();
     }
 }
+
+//creer des packages pour separer ?
+//plusieurs fichiers ?
 
 

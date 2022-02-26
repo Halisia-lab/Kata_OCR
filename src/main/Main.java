@@ -83,11 +83,11 @@ public class Main {
 
         int y = 0, line = 0;
         String strng;
-        File file = new File("files/input_100.txt");
+        File file = new File("files/100_tests.txt");
         FileReader fr = new FileReader(file);
         BufferedReader br = new BufferedReader(fr);
 
-        long nb = Files.lines(Path.of("files/input_100.txt")).count();
+        long nb = Files.lines(Path.of("files/100_tests.txt")).count();
         System.out.println(nb);
 
         while(nb <= 100 && line < nb/4) {

@@ -58,6 +58,5 @@ public final class DigitsDefinition {
                     {'|', '_', '|'},
                     {' ', '_', '|'}}
     );
-
     public static Set<Integer> possibleResults = patterns.keySet();
 }

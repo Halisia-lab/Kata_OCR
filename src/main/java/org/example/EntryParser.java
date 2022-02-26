@@ -1,28 +1,30 @@
 package org.example;
 
+import org.example.utils.ChecksumType;
 import org.example.utils.EntryDetails;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.util.Objects;
 
 public class EntryParser {
 
     private int currentColumnCount;
     BufferedReader bufferedReader;
-    private final DigitTable currentDigit;
-    private DigitIdentifier digitIdentifier;
+    private final DigitTable currentDigitResult;
+    private final DigitIdentifier digitIdentifier;
+    private final OutputFileWriter outputFileWriter;
 
-    public EntryParser(BufferedReader bufferedReader) {
+    public EntryParser(BufferedReader bufferedReader, OutputFileWriter outputFileWriter) {
         this.currentColumnCount = 0;
         this.bufferedReader = bufferedReader;
-        this.digitIdentifier = new DigitIdentifier();
-        this.currentDigit = new DigitTable(new char[][]{
+        this.currentDigitResult = new DigitTable(new char[][]{
                 {' ',' ',' '},
                 {' ',' ',' '},
                 {' ',' ',' '}}
         );
+        this.digitIdentifier = new DigitIdentifier();
+        this.outputFileWriter = outputFileWriter;
 
     }
 
@@ -42,17 +44,21 @@ public class EntryParser {
     }
 
     public OutputCode parse() throws IOException {
+
         while (!endOfEntry()) {
             backToLastMark();
             for(int i = 0; i < EntryDetails.DIGIT_HEIGHT; i++) {
                 String currentLineValue = nextLine() + " ";
                 for(int j = currentColumnCount; j < currentColumnCount + EntryDetails.DIGIT_WEIGHT; j++) {
-                    currentDigit.setValue(i,j, currentLineValue);
+                    currentDigitResult.setValue(i,j, currentLineValue);
                 }
             }
             increaseColumnCount(EntryDetails.DIGIT_WEIGHT);
-            digitIdentifier.identify(currentDigit);
+            digitIdentifier.identify(currentDigitResult);
         }
+
+            digitIdentifier.calculateChecksum();
+            outputFileWriter.write(digitIdentifier.getOutputCode());
         return digitIdentifier.getOutputCode();
     }
 }

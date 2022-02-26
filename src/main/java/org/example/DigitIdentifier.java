@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.utils.ChecksumCalculation;
 import org.example.utils.ChecksumType;
 
 public class DigitIdentifier {
@@ -9,7 +10,7 @@ public class DigitIdentifier {
         this.outputCode = new OutputCode();
     }
 
-    public OutputCode getOutputCode() {
+    public OutputCode getOutputCode()  {
         return outputCode;
     }
 
@@ -19,7 +20,16 @@ public class DigitIdentifier {
             outputCode.append(result.toString());
         } else {
             outputCode.append("?");
-            outputCode.setChecksumType(ChecksumType.ILLISIBLE);
+        }
+    }
+
+    public void calculateChecksum() {
+        if(this.outputCode.getChecksumType() != ChecksumType.UNKNOWN) {
+            int sum = 0;
+            for(int i = 0; i < outputCode.getValues().size() ; i++) {
+                sum += Integer.parseInt(outputCode.getValues().get(i))*(ChecksumCalculation.indexPositionHelper.get(i));
+            }
+            if(sum % ChecksumCalculation.MODULO_VALUE != 0) outputCode.setChecksumType(ChecksumType.ERRORED);
         }
     }
 

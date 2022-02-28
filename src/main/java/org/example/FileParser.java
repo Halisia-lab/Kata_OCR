@@ -32,12 +32,12 @@ public class FileParser {
         return currentLineCount == fileSize / EntryDetails.LINE_HEIGHT;
     }
 
-    public OutputFileWriter createOutputFileWriter() throws IOException {
+    public static OutputFileWriter createOutputFileWriter(String outputModeValue) throws IOException {
         return Objects.equals(outputModeValue, "GROUPED_CODES") ? new GroupCodesWriter() : new AllCodesWriter();
     }
 
-    public void parse() throws IOException {
-       OutputFileWriter outputFileWriter = createOutputFileWriter();
+    public void parse(OutputFileWriter outputFileWriter) throws IOException {
+       //OutputFileWriter outputFileWriter = createOutputFileWriter();
         while(!endOfFile()) {
             currentLineCount++;
             bufferedReader.mark(100);
@@ -46,6 +46,6 @@ public class FileParser {
             System.out.println(entryParser.parse());
             nextLine();
         }
-        outputFileWriter.close();
+        //outputFileWriter.close();
     }
 }

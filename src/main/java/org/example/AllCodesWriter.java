@@ -15,7 +15,7 @@ public class AllCodesWriter extends OutputFileWriter {
 
     public AllCodesWriter() throws IOException {
        super();
-       String outputFileName = LocalDate.now().toString() + LocalDateTime.now().getHour() + LocalDateTime.now().getMinute() + LocalDateTime.now().getSecond();
+       String outputFileName = "CODES";//LocalDate.now().toString() + LocalDateTime.now().getHour() + LocalDateTime.now().getMinute() + LocalDateTime.now().getSecond();
        this.writer = new PrintWriter("output/all_codes/" + outputFileName + ".txt", StandardCharsets.UTF_8);
 
     }

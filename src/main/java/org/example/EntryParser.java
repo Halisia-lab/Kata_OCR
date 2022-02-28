@@ -35,6 +35,7 @@ public class EntryParser {
     public void increaseColumnCount(int columns) {
         currentColumnCount += columns;
     }
+
     public void backToLastMark() throws IOException {
         bufferedReader.reset();
     }
